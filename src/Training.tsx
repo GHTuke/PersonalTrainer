@@ -11,9 +11,24 @@ export default function Training() {
     const [trainings, setTrainings] = useState([]);
 
     const [columnDefs] = useState<ColDef<TTraining>[]>([
-        { field: "date" },
-        { field: "duration" },
-        { field: "activity" },
+        { 
+            field: "date",
+            filter: true,
+            floatingFilter: true,
+            suppressFloatingFilterButton: true,
+        },
+        { 
+            field: "duration",
+            filter: true,
+            floatingFilter: true,
+            suppressFloatingFilterButton: true,
+        },
+        { 
+            field: "activity",
+            filter: true,
+            floatingFilter: true,
+            suppressFloatingFilterButton: true,
+        },
       ]);
       
 
