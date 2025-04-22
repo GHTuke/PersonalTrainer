@@ -8,8 +8,34 @@ export type TCustomer = {
     phone: string;
 }
 
+export type TCustomerLong = {
+    firstname: string;
+    lastname: string;
+    streetaddress: string;
+    postcode: string;
+    city: string;
+    email: string;
+    phone: string;
+    _links: {
+        self: {
+            href: string;
+        },
+        customer: {
+            href: string;
+        },
+        trainings: {
+            href: string;
+        }
+    }
+}
+
 export type TAddCustomerProps = {
     addCustomer: (customer: TCustomer) => void;
+}
+
+export type TEditCustomerProps = {
+    currentCustomer: TCustomerLong;
+    editCustomer: (customer: TCustomer, url: string) => void;
 }
 
 export type TTraining = {

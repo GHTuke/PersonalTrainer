@@ -5,22 +5,20 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import { TAddCustomerProps} from './types';
+import { TEditCustomerProps} from './types';
 
 // Using basic form dialog from MUI materials as basis
 // https://mui.com/material-ui/react-dialog/#form-dialogs
-
-// TAddCustomerProps added to types to get rid of type any warning
-export default function AddCustomer({ addCustomer }: TAddCustomerProps) {
+export default function EditCustomer({ currentCustomer, editCustomer }: TEditCustomerProps) {
     const [open, setOpen] = useState(false);
     const [customer, setCustomer] = useState({
-        firstname: '',
-        lastname: '',
-        streetaddress: '',
-        postcode: '',
-        city: '',
-        email: '',
-        phone: ''
+        firstname: currentCustomer.firstname,
+        lastname: currentCustomer.lastname,
+        streetaddress: currentCustomer.streetaddress,
+        postcode: currentCustomer.postcode,
+        city: currentCustomer.city,
+        email: currentCustomer.email,
+        phone: currentCustomer.phone
     });
 
     const handleClickOpen = () => {
@@ -38,7 +36,7 @@ export default function AddCustomer({ addCustomer }: TAddCustomerProps) {
     return (
         <>
             <Button variant="outlined" onClick={handleClickOpen}>
-                Add customer
+                Edit
             </Button>
             <Dialog
                 open={open}
@@ -48,9 +46,9 @@ export default function AddCustomer({ addCustomer }: TAddCustomerProps) {
                         component: 'form',
                         onSubmit: (event: FormEvent<HTMLFormElement>) => {
                             event.preventDefault();
-                            addCustomer({
+                            editCustomer({
                                 ...customer
-                            })
+                            }, currentCustomer._links.self.href)
                             handleClose();
                         },
                     },
