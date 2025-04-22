@@ -12,4 +12,5 @@ export type TTraining = {
     date: string;
     duration: string;
     activity: string;
+    customer: TCustomer;
 }

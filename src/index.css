@@ -1,0 +1,4 @@
+/*this centers the headers in ag grid*/
+.ag-header-cell-label {
+    justify-content: center;
+  }
