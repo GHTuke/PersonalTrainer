@@ -67,7 +67,7 @@ export default function Training() {
 
     return (
         <>
-            <h1>Customers</h1>
+            <h1>Training</h1>
 
             <div style={{ height: 700 }}>
                 <AgGridReact
