@@ -8,6 +8,10 @@ export type TCustomer = {
     phone: string;
 }
 
+export type TAddCustomerProps = {
+    addCustomer: (customer: TCustomer) => void;
+}
+
 export type TTraining = {
     date: string;
     duration: string;

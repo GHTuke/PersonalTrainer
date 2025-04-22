@@ -4,6 +4,7 @@ import { AllCommunityModule, ColDef, ModuleRegistry } from 'ag-grid-community';
 
 import { BASE_URL } from "./Url";
 import { TCustomer } from "./types";
+import AddCustomer from "./AddCustomer";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
@@ -79,10 +80,24 @@ export default function Customer() {
 
     useEffect(fetchCustomers, []);
 
+    const addCustomer = (car: TCustomer) => {
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(car)
+        };
+
+        fetch(`${BASE_URL}/customers`, options)
+            .then(() => fetchCustomers())
+            .catch(error => console.log(error))
+    }
+
     return (
         <>
             <h1>Customers</h1>
-
+            <AddCustomer addCustomer={addCustomer} />
             <div style={{ height: 700 }}>
                 <AgGridReact
                     rowData={customers}
