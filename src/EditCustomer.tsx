@@ -35,7 +35,7 @@ export default function EditCustomer({ currentCustomer, editCustomer }: TEditCus
 
     return (
         <>
-            <Button variant="outlined" onClick={handleClickOpen}>
+            <Button variant="contained" onClick={handleClickOpen}>
                 Edit
             </Button>
             <Dialog
@@ -54,7 +54,7 @@ export default function EditCustomer({ currentCustomer, editCustomer }: TEditCus
                     },
                 }}
             >
-                <DialogTitle>Add customer</DialogTitle>
+                <DialogTitle>Edit customer</DialogTitle>
                 <DialogContent>
                     <TextField
                         autoFocus

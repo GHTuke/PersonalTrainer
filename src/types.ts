@@ -44,3 +44,15 @@ export type TTraining = {
     activity: string;
     customer: TCustomer;
 }
+
+export type TNewTraining = {
+    date: string;
+    duration: string;
+    activity: string;
+    customer: string;
+}
+
+export type TAddTrainingProps = {
+    customer: TCustomerLong;
+    addTraining: (training: TNewTraining) => void;
+}

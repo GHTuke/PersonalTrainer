@@ -3,10 +3,11 @@ import { AgGridReact } from "ag-grid-react"
 import { AllCommunityModule, ColDef, ICellRendererParams, ModuleRegistry } from 'ag-grid-community';
 
 import { BASE_URL } from "./Url";
-import { TCustomer, TCustomerLong } from "./types";
+import { TCustomer, TCustomerLong, TNewTraining } from "./types";
 import AddCustomer from "./AddCustomer";
 import EditCustomer from "./EditCustomer";
 import { Button } from "@mui/material";
+import AddTrainings from "./AddTrainings";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
@@ -72,7 +73,7 @@ export default function Customer() {
         },
         {
             flex: 0.5,
-            cellRenderer: (params: ICellRendererParams<TCustomerLong>) => 
+            cellRenderer: (params: ICellRendererParams<TCustomerLong>) =>
                 <EditCustomer
                     currentCustomer={params.data as TCustomerLong}
                     editCustomer={updateCustomer}
@@ -86,8 +87,30 @@ export default function Customer() {
                 return <Button onClick={() => handleDelete(params.value)} color='error'>Delete</Button>
             }
         },
+        {
+            cellRenderer: (params: ICellRendererParams<TCustomerLong>) =>
+                params.data ? (
+                    <AddTrainings
+                        customer={params.data}
+                        addTraining={addTraining}
+                    />
+                ) : null,
+        },
     ]);
 
+    const addTraining = (newTraining: TNewTraining) => {
+        fetch(`${BASE_URL}/trainings`, {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(newTraining),
+        })
+            .then(response => {
+                return response.json();
+            })
+            .catch(error => console.log(error))
+    }
+
+    // very basic confirmation window for deleting customer
     const handleDelete = (url: string) => {
         if (window.confirm('Confirm delete')) {
             deleteCustomer(url);
@@ -149,10 +172,12 @@ export default function Customer() {
         <>
             <h1>Customers</h1>
             <AddCustomer addCustomer={addCustomer} />
+            {/* rowHeight korjaa Button objektin korkeus ongelmat riveillä */}
             <div style={{ height: 700 }}>
                 <AgGridReact
                     rowData={customers}
                     columnDefs={columnDefs}
+                    rowHeight={46}
                 />
             </div>
         </>
