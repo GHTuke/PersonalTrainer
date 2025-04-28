@@ -39,6 +39,7 @@ export type TEditCustomerProps = {
 }
 
 export type TTraining = {
+    id: number;
     date: string;
     duration: string;
     activity: string;

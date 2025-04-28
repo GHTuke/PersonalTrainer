@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { AgGridReact } from "ag-grid-react"
-import { AllCommunityModule, ColDef, ModuleRegistry } from 'ag-grid-community'; 
+import { AllCommunityModule, ColDef, ICellRendererParams, ModuleRegistry } from 'ag-grid-community';
 
 import { BASE_URL } from "./Url";
 import { TTraining } from "./types";
 import dayjs from "dayjs";
+import { Button } from "@mui/material";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
@@ -12,7 +13,7 @@ export default function Training() {
     const [trainings, setTrainings] = useState([]);
 
     const [columnDefs] = useState<ColDef<TTraining>[]>([
-        { 
+        {
             field: "date",
             headerName: "Date",
             flex: 1,
@@ -23,7 +24,7 @@ export default function Training() {
                 return dayjs(params.value).format('DD.MM.YYYY hh.mm');
             }
         },
-        { 
+        {
             field: "duration",
             headerName: "Duration",
             flex: 0.5,
@@ -31,7 +32,7 @@ export default function Training() {
             floatingFilter: true,
             suppressFloatingFilterButton: true,
         },
-        { 
+        {
             field: "activity",
             headerName: "Activity",
             flex: 1,
@@ -39,7 +40,7 @@ export default function Training() {
             floatingFilter: true,
             suppressFloatingFilterButton: true,
         },
-        { 
+        {
             field: "customer",
             headerName: "Customer",
             valueGetter: (params) => {
@@ -53,8 +54,22 @@ export default function Training() {
             floatingFilter: true,
             suppressFloatingFilterButton: true,
         },
-      ]);
-      
+        {
+            field: 'id',
+            headerName: '',
+            flex: 1,
+            cellRenderer: (params: ICellRendererParams) => {
+                return <Button onClick={() => handleDelete(params.value)} color='error'>Delete</Button>
+            }
+        },
+    ]);
+
+    // very basic confirmation window for deleting training
+    const handleDelete = (id: number) => {
+        if (window.confirm('Confirm delete')) {
+            deleteTraining(id);
+        }
+    }
 
     const fetchTrainings = () => {
         fetch(`${BASE_URL}/gettrainings`)
@@ -64,6 +79,16 @@ export default function Training() {
     }
 
     useEffect(fetchTrainings, []);
+
+    const deleteTraining = (id: number) => {
+        const options = {
+            method: 'DELETE'
+        };
+
+        fetch(`${BASE_URL}/trainings/${id}`, options)
+            .then(() => fetchTrainings())
+            .catch(error => console.log(error))
+    }
 
     return (
         <>
