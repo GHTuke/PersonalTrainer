@@ -65,14 +65,14 @@ export default function Customer() {
         },
         {
             field: "phone",
-            headerName: "Phonenumber",
+            headerName: "Phone",
             flex: 1,
             filter: true,
             floatingFilter: true,
             suppressFloatingFilterButton: true,
         },
         {
-            flex: 0.5,
+            flex: 0.6,
             cellRenderer: (params: ICellRendererParams<TCustomerLong>) =>
                 <EditCustomer
                     currentCustomer={params.data as TCustomerLong}
