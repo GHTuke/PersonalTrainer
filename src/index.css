@@ -2,3 +2,10 @@
 .ag-header-cell-label {
     justify-content: center;
   }
+
+  :root {
+    /*these are used to control calendar page button colors*/
+    --fc-button-bg-color: #2196f3;
+    --fc-button-hover-bg-color: #1769aa;
+    --fc-button-active-bg-color: #1769aa;
+  }

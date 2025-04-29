@@ -21,7 +21,7 @@ export default function Training() {
             floatingFilter: true,
             suppressFloatingFilterButton: true,
             valueFormatter: (params) => {
-                return dayjs(params.value).format('DD.MM.YYYY hh.mm');
+                return dayjs(params.value).format('DD.MM.YYYY HH.mm');
             }
         },
         {
@@ -98,6 +98,7 @@ export default function Training() {
                 <AgGridReact
                     rowData={trainings}
                     columnDefs={columnDefs}
+                    rowHeight={46}
                 />
             </div>
         </>
