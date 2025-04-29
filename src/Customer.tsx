@@ -6,8 +6,9 @@ import { BASE_URL } from "./Url";
 import { TCustomer, TCustomerLong, TNewTraining } from "./types";
 import AddCustomer from "./AddCustomer";
 import EditCustomer from "./EditCustomer";
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import AddTrainings from "./AddTrainings";
+import { saveAs } from 'file-saver';
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
@@ -72,7 +73,7 @@ export default function Customer() {
             suppressFloatingFilterButton: true,
         },
         {
-            flex: 0.6,
+            flex: 1,
             cellRenderer: (params: ICellRendererParams<TCustomerLong>) =>
                 <EditCustomer
                     currentCustomer={params.data as TCustomerLong}
@@ -82,7 +83,7 @@ export default function Customer() {
         {
             field: '_links.self.href',
             headerName: '',
-            flex: 0.6,
+            flex: 1,
             cellRenderer: (params: ICellRendererParams) => {
                 return <Button onClick={() => handleDelete(params.value)} color='error'>Delete</Button>
             }
@@ -168,11 +169,54 @@ export default function Customer() {
             .catch(error => console.log(error))
     }
 
+    // used file-saver https://www.npmjs.com/package/file-saver for easier saveAs
+    // extra reading on blobs https://developer.mozilla.org/en-US/docs/Web/API/Blob
+    const exportToCSV = () => {
+        const headers = [
+            "First name",
+            "Last name",
+            "Address",
+            "Postcode",
+            "City",
+            "Email",
+            "Phone",
+            "Link"
+        ]
+
+        const rows = customers.map((customer: TCustomerLong) => [
+            customer.firstname,
+            customer.lastname,
+            customer.streetaddress,
+            customer.postcode,
+            customer.city,
+            customer.email,
+            customer.phone,
+            customer._links.self.href
+        ])
+
+        // csv content pulled from https://dev.to/graciesharma/implementing-csv-data-export-in-react-without-external-libraries-3030
+        const csvContent = [
+            headers.join(","),
+            ...rows.map(row => row.join(","))
+        ].join("\n");
+
+        const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+        saveAs(blob, "customers.csv");
+    }
+
     return (
         <>
             <h1>Customers</h1>
-            <AddCustomer addCustomer={addCustomer} />
-            {/* rowHeight korjaa Button objektin korkeus ongelmat riveillä */}
+            {/* box added to add margins around Buttons */}
+            <Box justifyContent="center" display="flex" gap={2} mb={2}>
+                <AddCustomer addCustomer={addCustomer} />
+                <Button
+                    variant="outlined"
+                    color="primary"
+                    onClick={exportToCSV}
+                >Export Customers</Button>
+            </Box>
+            {/* rowHeight fixes Button object height issues in rows */}
             <div style={{ height: 700 }}>
                 <AgGridReact
                     rowData={customers}
