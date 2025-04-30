@@ -38,7 +38,12 @@ export default function Calendar() {
 
     return (
         <>
-            {/*eventTimeFormat fixed with https://fullcalendar.io/docs/eventTimeFormat */}
+            {/*
+            eventTimeFormat fixed with https://fullcalendar.io/docs/eventTimeFormat 
+            
+            dayGrid for month view and timeGrid for week and day views
+            to get better visualized grid
+            */}
             <div style={{ padding: "10px" }}>
                 <FullCalendar
                     plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}

@@ -8,6 +8,7 @@ import Training from './Training.tsx'
 import Error from './Error.tsx'
 import Calendar from './Calendar.tsx'
 
+// hashrouter because Github pages does not support browserRouter
 const router = createHashRouter([
   {
     path: "/",
@@ -16,6 +17,7 @@ const router = createHashRouter([
     children: [
       {
         element: <Customer />,
+        // setting as index page
         index: true
       },
       {

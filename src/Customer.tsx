@@ -15,6 +15,7 @@ ModuleRegistry.registerModules([AllCommunityModule]);
 export default function Customer() {
     const [customers, setCustomers] = useState([]);
 
+    // columndefinitions for ag grid
     const [columnDefs] = useState<ColDef<TCustomerLong>[]>([
         {
             field: "firstname",
@@ -99,6 +100,7 @@ export default function Customer() {
         },
     ]);
 
+    // function to POST a new training
     const addTraining = (newTraining: TNewTraining) => {
         fetch(`${BASE_URL}/trainings`, {
             method: "POST",
@@ -170,7 +172,6 @@ export default function Customer() {
     }
 
     // used file-saver https://www.npmjs.com/package/file-saver for easier saveAs
-    // extra reading on blobs https://developer.mozilla.org/en-US/docs/Web/API/Blob
     const exportToCSV = () => {
         const headers = [
             "First name",

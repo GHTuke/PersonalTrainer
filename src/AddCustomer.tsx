@@ -13,6 +13,7 @@ import { TAddCustomerProps} from './types';
 // TAddCustomerProps added to types to get rid of type any warning
 export default function AddCustomer({ addCustomer }: TAddCustomerProps) {
     const [open, setOpen] = useState(false);
+    // preset data as empty strings
     const [customer, setCustomer] = useState({
         firstname: '',
         lastname: '',
@@ -46,6 +47,7 @@ export default function AddCustomer({ addCustomer }: TAddCustomerProps) {
                 slotProps={{
                     paper: {
                         component: 'form',
+                        // on submit use addCustomer function to POST data to database
                         onSubmit: (event: FormEvent<HTMLFormElement>) => {
                             event.preventDefault();
                             addCustomer({

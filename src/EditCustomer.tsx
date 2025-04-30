@@ -11,6 +11,7 @@ import { TEditCustomerProps} from './types';
 // https://mui.com/material-ui/react-dialog/#form-dialogs
 export default function EditCustomer({ currentCustomer, editCustomer }: TEditCustomerProps) {
     const [open, setOpen] = useState(false);
+    // pre fill customer data with the current customer data
     const [customer, setCustomer] = useState({
         firstname: currentCustomer.firstname,
         lastname: currentCustomer.lastname,
@@ -44,6 +45,8 @@ export default function EditCustomer({ currentCustomer, editCustomer }: TEditCus
                 slotProps={{
                     paper: {
                         component: 'form',
+                        // on submit use editCustomer function to PUT updated fields to customer
+                        // identified by _links.self.href
                         onSubmit: (event: FormEvent<HTMLFormElement>) => {
                             event.preventDefault();
                             editCustomer({
